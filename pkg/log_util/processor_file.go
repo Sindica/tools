@@ -78,7 +78,9 @@ func GetTimeDiff(time1, time2 string) (time.Duration, error) {
 		resultTime2 = time.Date(2020, 1, 2, h2, min2, sec2, ms2, loc)
 	}
 
-	return resultTime2.Sub(resultTime1), nil
+	timeDiff := resultTime2.Sub(resultTime1)
+	fmt.Printf("Start time %s, completed time %s, diff %v\n", time1, time2, timeDiff)
+	return timeDiff, nil
 }
 
 func parseTime(time1 string) (int, int, int, int, error) {

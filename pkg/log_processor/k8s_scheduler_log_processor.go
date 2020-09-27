@@ -139,7 +139,7 @@ func ExtractScheduledAndNonScheduledPod(pathToFind string) {
 	// output to files
 	for podName, scheduling := range podToSchedule {
 		if scheduling.duration > 0 {
-			scheduledFileHandler.WriteString(fmt.Sprintf("%s, %v, Start at %v\n", podName, scheduling.duration, scheduling.startTime))
+			scheduledFileHandler.WriteString(fmt.Sprintf("%s, %v, Start at %v\n", podName, scheduling.duration.Nanoseconds(), scheduling.startTime))
 			if scheduling.duration > latencyToWatch {
 				latencyScheduledFileHandler.WriteString(fmt.Sprintf("%s, %v, Start at %v\n", podName, scheduling.duration, scheduling.startTime))
 			}
