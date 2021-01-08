@@ -16,7 +16,14 @@ func main() {
 
 	//parseTraceFile()
 
-	parseAuditLogJsonFormat()
+	switch mode {
+	case "audit":
+		parseAuditLogJsonFormat()
+	case "audit_compact":
+		parseCompactedAuditLog()
+	default:
+		fmt.Println("Invalid processing mode")
+	}
 }
 
 func parseTraceFile() {
@@ -43,14 +50,30 @@ func parseEtcdLogFile() {
 	}
 }
 
-var inputfilename string
+var mode string
+var audit_log_filename string
+var compacted_audit_log_filename string
+var threadhold_xl_count int
 
 func init() {
-	flag.StringVar(&inputfilename, "audit_file", "", "absolute path to the audit file")
+	flag.StringVar(&mode, "process_mode", "", "audit: process audit log\naudit_compact: process compacted audit log\n")
+	flag.StringVar(&audit_log_filename, "audit_file", "", "absolute path to the audit file")
+	flag.StringVar(&compacted_audit_log_filename, "audit_compacted_file", "", "absolute path to the compacted audit file")
+	flag.IntVar(&threadhold_xl_count, "audit_count_xl", 10000, "extract compacted audit log to extra large request file")
 	flag.Parse()
 }
 
 func parseAuditLogJsonFormat() {
 	outputPath := "."
-	apiserver_audit_log.ExtractAuditLog(outputPath, inputfilename)
+	apiserver_audit_log.ExtractAuditLog(outputPath, audit_log_filename)
+}
+
+/* Sample file:
+uri, verb, response_code, count, stage
+/apis/arktos.futurewei.com/v1/tenants/system/networks/default, get, 404, 2, ResponseComplete
+/api/v1/tenants/system/namespaces/lodkz7-testns/secrets, list, 200, 1, ResponseComplete
+/api/v1/nodes/hollow-node-54fsg, get, 200, 1, ResponseComplete
+*/
+func parseCompactedAuditLog() {
+	apiserver_audit_log.ExtractCompactedAuditLog(".", compacted_audit_log_filename, threadhold_xl_count)
 }

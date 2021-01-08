@@ -104,3 +104,10 @@ func parseTime(time1 string) (int, int, int, int, error) {
 	}
 	return h, m, s, ms, nil
 }
+
+func GetFilenameOnly(inputFilename string) string {
+	filenames := strings.Split(inputFilename, "/")
+	filenameShort := filenames[len(filenames)-1]
+	fmt.Printf("input file name [%s]\n", filenameShort)
+	return filenameShort
+}

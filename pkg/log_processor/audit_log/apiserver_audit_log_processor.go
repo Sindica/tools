@@ -7,6 +7,7 @@ import (
 	"os"
 	"path"
 	"strings"
+	"tools/pkg/log_util"
 )
 
 type userAuditLog struct {
@@ -181,10 +182,7 @@ func ProcessAuditLog(inputFilename, outputFilename1, outputFilename2, otherFilen
 }
 
 func ExtractAuditLog(outputPath string, inputFilename string) {
-	filenames := strings.Split(inputFilename, "/")
-	filenameShort := filenames[len(filenames)-1]
-	fmt.Printf("input file name [%s]\n", filenameShort)
-
+	filenameShort := log_util.GetFilenameOnly(inputFilename)
 	outputFilename1 := path.Join(outputPath, "compact-start-"+filenameShort)
 	outputFilename2 := path.Join(outputPath, "compact-complete-"+filenameShort)
 	otherFilename := path.Join(outputPath, "compact-Unexpected-"+filenameShort)
