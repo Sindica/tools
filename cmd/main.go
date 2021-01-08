@@ -1,7 +1,9 @@
 package main
 
 import (
+	"flag"
 	"fmt"
+	apiserver_audit_log "tools/pkg/log_processor/audit_log"
 	"tools/pkg/log_processor/etcd_log"
 	"tools/pkg/log_processor/trace_log"
 )
@@ -12,11 +14,14 @@ func main() {
 	//log_processor.ExtractScheduledAndNonScheduledPod(pathToFind)
 	//log_processor.GetTimeToNano(pathToFind, "wcm-7-throttle-rs.txt", "wcm-7-throttle-rs.output")
 
-	parseTraceFile()
+	//parseTraceFile()
+
+	parseAuditLogJsonFormat()
 }
 
 func parseTraceFile() {
-	pathToFind := "/home/yinghuang/apiserver-perf/gce-500"
+	//pathToFind := "/home/yinghuang/apiserver-perf/gce-500"
+	pathToFind := "/home/yinghuang/apiserver-perf/xiaoning.trace.10.02"
 	trace_log.ExtractTraceLog(pathToFind)
 }
 
@@ -36,4 +41,16 @@ func parseEtcdLogFile() {
 		fmt.Println()
 		etcd_log.ParNonRangeLog(pathToFind)
 	}
+}
+
+var inputfilename string
+
+func init() {
+	flag.StringVar(&inputfilename, "audit_file", "", "absolute path to the audit file")
+	flag.Parse()
+}
+
+func parseAuditLogJsonFormat() {
+	outputPath := "."
+	apiserver_audit_log.ExtractAuditLog(outputPath, inputfilename)
 }
