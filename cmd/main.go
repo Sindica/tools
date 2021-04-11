@@ -4,6 +4,7 @@ import (
 	"flag"
 	"fmt"
 	apiserver_audit_log "tools/pkg/log_processor/audit_log"
+	"tools/pkg/log_processor/controller_log"
 	"tools/pkg/log_processor/etcd_log"
 	"tools/pkg/log_processor/trace_log"
 )
@@ -16,6 +17,7 @@ func main() {
 
 	//parseTraceFile()
 
+	/*
 	switch mode {
 	case "audit":
 		parseAuditLogJsonFormat()
@@ -23,7 +25,10 @@ func main() {
 		parseCompactedAuditLog()
 	default:
 		fmt.Println("Invalid processing mode")
-	}
+	}*/
+
+	pathToFind := "/home/yinghuang/debug"
+	controller_log.ExtractPodSchedulingTime(pathToFind)
 }
 
 func parseTraceFile() {
