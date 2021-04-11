@@ -1,4 +1,4 @@
-package log_processor
+package scheduler_log
 
 import (
 	"bufio"
