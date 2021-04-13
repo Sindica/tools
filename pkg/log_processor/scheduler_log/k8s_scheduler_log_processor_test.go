@@ -1,7 +1,7 @@
 package scheduler_log
 
 import (
-	"tools/vendor/github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 

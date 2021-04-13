@@ -27,7 +27,7 @@ func main() {
 		fmt.Println("Invalid processing mode")
 	}*/
 
-	pathToFind := "/home/yinghuang/debug"
+	pathToFind := "/home/yinghuang/debug/2021-04-09-debug/evaluated1500"
 	controller_log.ExtractPodSchedulingTime(pathToFind)
 }
 

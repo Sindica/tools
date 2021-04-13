@@ -74,12 +74,12 @@ func GetTimeDiff(time1, time2 string) (time.Duration, error) {
 
 	resultTime1 := time.Date(2020, 1, 1, h1, min1, sec1, ms1, loc)
 	resultTime2 := time.Date(2020, 1, 1, h2, min2, sec2, ms2, loc)
-	if resultTime2.Before(resultTime1) {
+	/*if resultTime2.Before(resultTime1) {
 		resultTime2 = time.Date(2020, 1, 2, h2, min2, sec2, ms2, loc)
-	}
+	}*/
 
 	timeDiff := resultTime2.Sub(resultTime1)
-	fmt.Printf("Start time %s, completed time %s, diff %v\n", time1, time2, timeDiff)
+	//fmt.Printf("Start time %s, completed time %s, diff %v\n", time1, time2, timeDiff)
 	return timeDiff, nil
 }
 
