@@ -111,3 +111,8 @@ func GetFilenameOnly(inputFilename string) string {
 	fmt.Printf("input file name [%s]\n", filenameShort)
 	return filenameShort
 }
+
+// Get 2021-08-12T02:50:29 from 2021-08-12T02:50:29.804368Z
+func GetDateTime(dt string, len int) string {
+	return dt[:len]
+}

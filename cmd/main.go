@@ -4,7 +4,6 @@ import (
 	"flag"
 	"fmt"
 	apiserver_audit_log "tools/pkg/log_processor/audit_log"
-	"tools/pkg/log_processor/controller_log"
 	"tools/pkg/log_processor/etcd_log"
 	"tools/pkg/log_processor/trace_log"
 )
@@ -27,8 +26,9 @@ func main() {
 		fmt.Println("Invalid processing mode")
 	}*/
 
-	pathToFind := "/home/yinghuang/debug/2021-04-09-debug/evaluated1500"
-	controller_log.ExtractPodSchedulingTime(pathToFind)
+	//pathToFind := "/home/yinghuang/debug/2021-04-09-debug/evaluated1500"
+	//controller_log.ExtractPodSchedulingTime(pathToFind)
+	parseAuditLogGetLeaseUpdate()
 }
 
 func parseTraceFile() {
@@ -59,10 +59,12 @@ var mode string
 var audit_log_filename string
 var compacted_audit_log_filename string
 var threadhold_xl_count int
+var output_path string
 
 func init() {
 	flag.StringVar(&mode, "process_mode", "", "audit: process audit log\naudit_compact: process compacted audit log\n")
 	flag.StringVar(&audit_log_filename, "audit_file", "", "absolute path to the audit file")
+	flag.StringVar(&output_path, "output_path", "", "absolute path to the output files")
 	flag.StringVar(&compacted_audit_log_filename, "audit_compacted_file", "", "absolute path to the compacted audit file")
 	flag.IntVar(&threadhold_xl_count, "audit_count_xl", 10000, "extract compacted audit log to extra large request file")
 	flag.Parse()
@@ -81,4 +83,8 @@ uri, verb, response_code, count, stage
 */
 func parseCompactedAuditLog() {
 	apiserver_audit_log.ExtractCompactedAuditLog(".", compacted_audit_log_filename, threadhold_xl_count)
+}
+
+func parseAuditLogGetLeaseUpdate() {
+	apiserver_audit_log.ExtractLeaseUpdateAuditLog(output_path, audit_log_filename)
 }
